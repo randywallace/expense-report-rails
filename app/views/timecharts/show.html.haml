@@ -1,0 +1,21 @@
+%table.table.table-bordered.table-striped.table-hover
+  %thead
+    %tr
+      %th Employer
+      %th Description
+      %th Start Time
+      %th Stop Time
+      %th Time Worked
+      %th Cash Earned
+  %tbody
+    %tr
+      %td= @timechart.employer.name
+      %td= @timechart.description
+      %td= @timechart.start_time.strftime("%Y-%m-%d %H:%M")
+      %td= @timechart.stop_time.strftime("%Y-%m-%d %H:%M")
+      - @hours = sprintf('%.2f', (@timechart.stop_time - @timechart.start_time)/3600)
+      %td= @hours + " Hours"
+      %td= sprintf('%.2f', (@hours.to_f * @timechart.employer.hourly_rate.to_f))
+
+= link_to 'Edit', edit_timechart_path(@timechart), class: "btn"
+= link_to 'Back', timecharts_path, class: "btn"

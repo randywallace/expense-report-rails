@@ -1,0 +1,7 @@
+%h1.page-header= "Editing #{@employer.name}"
+
+= render 'form'
+
+.row.span10.offset1
+  = link_to 'Show', @employer, class: "btn"
+  = link_to 'Back', employers_path, class: "btn"

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyText
+  date_started: 2013-01-12
+  currently_employed: false
+
+two:
+  name: MyText
+  date_started: 2013-01-12
+  currently_employed: false

@@ -1,0 +1,32 @@
+%h1.page-header Listing Timecharts
+
+%table.table.table-bordered.table-striped.table-hover
+  %thead
+    %tr
+      %th Employer
+      %th Description
+      %th Start time
+      %th Stop time
+      %th Time Worked
+      %th Cash Earned
+      %th
+      %th
+      %th
+
+  - @timecharts.each do |timechart|
+    %tr
+      %td= timechart.employer.name
+      %td= timechart.description
+      %td= timechart.start_time.strftime("%Y-%m-%d %H:%M")
+      %td= timechart.stop_time.strftime("%Y-%m-%d %H:%M")
+      - @hours = sprintf('%.2f', (timechart.stop_time - timechart.start_time)/3600)
+      %td= @hours + " Hours"
+      %td= sprintf('%.2f', (@hours.to_f * timechart.employer.hourly_rate.to_f))
+      %td= link_to 'Show', timechart
+      %td= link_to 'Edit', edit_timechart_path(timechart)
+      %td= link_to 'Destroy', timechart, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+.row.span10
+  = link_to 'New Timechart', new_timechart_path, class: "btn"

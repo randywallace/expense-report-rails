@@ -1,0 +1,19 @@
+%table.table.table-bordered.table-striped.table-hover
+  %thead
+    %tr
+      %th Name
+      %th Date Started
+      %th Hourly Rate
+      %th Currently Employed
+  %tbody
+    %tr
+      %td
+        = @employer.name 
+      %td
+        = @employer.date_started
+      %td
+        = '$' + sprintf('%.2f', @employer.hourly_rate)
+      %td
+        = @employer.currently_employed ? "Yes" : "No"
+= link_to 'Edit', edit_employer_path(@employer), class: "btn"
+= link_to 'Back', employers_path, class: "btn"

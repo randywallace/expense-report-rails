@@ -1,0 +1,27 @@
+%h1.page-header Listing Employers
+
+%table.table.table-bordered.table-striped.table-hover
+  %thead
+    %tr
+      %th Name
+      %th Date started
+      %th Hourly Rate
+      %th Currently employed
+      %th
+      %th
+      %th
+  %tbody
+    - @employers.each do |employer|
+      %tr
+        %td= employer.name
+        %td= employer.date_started
+        %td= '$' + sprintf('%.2f', employer.hourly_rate)
+        %td= employer.currently_employed ? "Yes" : "No"
+        %td= link_to 'Show', employer 
+        %td= link_to 'Edit', edit_employer_path(employer) 
+        %td= link_to 'Destroy', employer, method: :delete, data: { confirm: 'Are you sure?' } 
+  
+
+.row
+  .span10
+    = link_to 'New Employer', new_employer_path, class: "btn"

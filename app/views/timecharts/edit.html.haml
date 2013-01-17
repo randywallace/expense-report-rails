@@ -1,0 +1,7 @@
+%h1.page-header= "Editing #{@timechart.description}"
+
+= render 'form'
+
+.row.span10.offset1
+  = link_to 'Show', @timechart, class: "btn"
+  = link_to 'Back', timecharts_path, class: "btn"
