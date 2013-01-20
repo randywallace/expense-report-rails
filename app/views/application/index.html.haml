@@ -1,62 +1,106 @@
-%center
-  %h2.page-header Employers
+-# %center
+-#   %h2.page-header Employers
 
-%table.table.table-bordered.table-striped.table-hover
-  %thead
-    %tr
-      %th Name
-      %th Date started
-      %th Hourly Rate
-      %th Currently employed
-      %th
-      %th
-      %th
-  %tbody
-    - @employers.each do |employer|
+- @employers.each do |employer|
+  %h1.page-header= employer.name
+  %h3= "Hourly Rate: $" + sprintf('%.2f', employer.hourly_rate)
+  %table.table.table-condensed
+    %thead
       %tr
-        %td= employer.name
-        %td= employer.date_started
-        %td= '$' + sprintf('%.2f', employer.hourly_rate)
-        %td= employer.currently_employed ? "Yes" : "No"
-        %td= link_to 'Show', employer 
-        %td= link_to 'Edit', edit_employer_path(employer) 
-        %td= link_to 'Destroy', employer, method: :delete, data: { confirm: 'Are you sure?' } 
-  
-
-.row
-  .span10
-    = link_to 'New Employer', new_employer_path, class: "btn"
-
-%center
-  %h2.page-header Timecharts
-
-%table.table.table-bordered.table-striped.table-hover
-  %thead
-    %tr
-      %th Employer
-      %th Description
-      %th Start time
-      %th Stop time
-      %th Time Worked
-      %th Cash Earned
-      %th
-      %th
-      %th
-
-  - @timecharts.each do |timechart|
-    %tr
-      %td= timechart.employer.name
-      %td= timechart.description
-      %td= timechart.start_time.strftime("%Y-%m-%d %H:%M")
-      %td= timechart.stop_time.strftime("%Y-%m-%d %H:%M")
-      - @hours = sprintf('%.2f', (timechart.stop_time - timechart.start_time)/3600)
-      %td= @hours + " Hours"
-      %td= sprintf('%.2f', (@hours.to_f * timechart.employer.hourly_rate.to_f))
-      %td= link_to 'Show', timechart
-      %td= link_to 'Edit', edit_timechart_path(timechart)
-      %td= link_to 'Destroy', timechart, method: :delete, data: { confirm: 'Are you sure?' }
-
-%br
+        %th Description
+        %th Start Time
+        %th Time Worked
+        %th Cash Earned
+        %th{style: "text-align: center;"} Actions
+    %tbody
+      - @total_hours = 0
+      - @total_earned = 0
+      - employer.timecharts.order('start_time DESC').each  do |timechart|
+        %tr
+          %td= timechart.description
+          %td= timechart.start_time.strftime('%d%^b%y %H:%M %Z')
+          - @hours = sprintf('%.2f', (timechart.stop_time - timechart.start_time)/3600)
+          %td= @hours + " Hours"
+          - @earnings = @hours.to_f * timechart.employer.hourly_rate.to_f
+          %td= '$ ' + sprintf('%.2f', @earnings)
+          %td
+            %center
+              = link_to timechart, class: "btn btn-small" do
+                %i.icon-eye-open
+              = link_to edit_timechart_path(timechart), class: "btn btn-small" do
+                %i.icon-pencil
+              = link_to timechart, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-small" do
+                %i.icon-trash
+        - @total_hours += @hours.to_f
+        - @total_earned += @earnings
+      %tr
+        %th 
+        %th
+        %th= sprintf('%.0f', @total_hours) + " Hours"
+        %th= '$ ' + sprintf('%.2f', @total_earned) 
+        %th
 
 .row.span10
   = link_to 'New Timechart', new_timechart_path, class: "btn"
+  = link_to 'New Employer', new_employer_path, class: "btn"
+  
+
+-# %table.table.table-bordered.table-striped.table-hover
+-#   %thead
+-#     %tr
+-#       %th Name
+-#       %th Date started
+-#       %th Hourly Rate
+-#       %th Currently employed
+-#       %th
+-#       %th
+-#       %th
+-#   %tbody
+-#     - @employers.each do |employer|
+-#       %tr
+-#         %td= employer.name
+-#         %td= employer.date_started
+-#         %td= '$' + sprintf('%.2f', employer.hourly_rate)
+-#         %td= employer.currently_employed ? "Yes" : "No"
+-#         %td= link_to 'Show', employer 
+-#         %td= link_to 'Edit', edit_employer_path(employer) 
+-#         %td= link_to 'Destroy', employer, method: :delete, data: { confirm: 'Are you sure?' } 
+-#   
+-# 
+-# .row
+-#   .span10
+-#     = link_to 'New Employer', new_employer_path, class: "btn"
+
+-# %center
+-#   %h2.page-header Timecharts
+-# 
+-# %table.table.table-bordered.table-striped.table-hover
+-#   %thead
+-#     %tr
+-#       %th Employer
+-#       %th Description
+-#       %th Start time
+-#       %th Stop time
+-#       %th Time Worked
+-#       %th Cash Earned
+-#       %th
+-#       %th
+-#       %th
+-# 
+-#   - @timecharts.each do |timechart|
+-#     %tr
+-#       %td= timechart.employer.name
+-#       %td= timechart.description
+-#       %td= timechart.start_time.strftime("%Y-%m-%d %H:%M")
+-#       %td= timechart.stop_time.strftime("%Y-%m-%d %H:%M")
+-#       - @hours = sprintf('%.2f', (timechart.stop_time - timechart.start_time)/3600)
+-#       %td= @hours + " Hours"
+-#       %td= sprintf('%.2f', (@hours.to_f * timechart.employer.hourly_rate.to_f))
+-#       %td= link_to 'Show', timechart
+-#       %td= link_to 'Edit', edit_timechart_path(timechart)
+-#       %td= link_to 'Destroy', timechart, method: :delete, data: { confirm: 'Are you sure?' }
+-# 
+-# %br
+-# 
+-# .row.span10
+-#   = link_to 'New Timechart', new_timechart_path, class: "btn"

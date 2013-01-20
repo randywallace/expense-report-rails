@@ -23,7 +23,7 @@ $(function() {
 $(function(){
   $(".anytime").AnyTime_picker(
     { 
-      format: "%Y-%m-%d %l:%i %+",
+      format: "%Y-%m-%d %k:%i %+",
       formatUtcOffset: "%: (%@)",
       hideInput: false
     }

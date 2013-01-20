@@ -1,4 +1,6 @@
 class TimechartsController < ApplicationController
+  before_filter :authenticate_user!
+
   # GET /timecharts
   # GET /timecharts.json
   def index
