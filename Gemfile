@@ -12,7 +12,7 @@ gem 'haml-rails'
 gem 'bootstrap-datepicker-rails'
 gem 'anytime-js-rails'
 gem 'devise'
-
+#gem 'rails-dev-tweaks', '~> 0.6.1'
 
 # Gems used only for assets and not required
 # in production environments by default.

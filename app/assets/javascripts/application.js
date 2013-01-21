@@ -23,9 +23,9 @@ $(function() {
 $(function(){
   $(".anytime").AnyTime_picker(
     { 
-      format: "%Y-%m-%d %k:%i %+",
+      format: "%Y-%m-%d %H:%i %+",
       formatUtcOffset: "%: (%@)",
-      hideInput: false
+      hideInput: false,
     }
   );
 });     
